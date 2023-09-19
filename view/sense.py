@@ -6,7 +6,7 @@ def speech_to_text():
 
   # Capture audio from the microphone
   with sr.Microphone() as source:
-    print(sr.Microphone.list_microphone_names())
+    # print(sr.Microphone.list_microphone_names())
     print("Fale algo...")
     recognizer.adjust_for_ambient_noise(source)  # Adjust for noise
     audio = recognizer.listen(source)
@@ -14,8 +14,10 @@ def speech_to_text():
   try:
     # Recognize the speech using Google Web Speech API
     text = recognizer.recognize_google(audio, language='pt-BR')
-    arrText = text.split(' ')
-    print("Você falou:", arrText)
+    text = text.lower()
+    stt = text.split(' ')
+    return stt
+    # print("Você falou:", stt)
   except sr.UnknownValueError:
     print("Sorry, I couldn't understand the audio.")
   except sr.RequestError as e:
