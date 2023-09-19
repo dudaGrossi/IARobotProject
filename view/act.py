@@ -3,8 +3,6 @@ import time
 
 from elevenlabs import generate, play
 
-
-
 def act(str):
     # engine = pyttsx3.init()
     # engine.say(str)

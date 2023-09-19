@@ -16,8 +16,8 @@ def speech_to_text():
     text = recognizer.recognize_google(audio, language='pt-BR')
     text = text.lower()
     stt = text.split(' ')
+    #print("Você falou:", stt)
     return stt
-    # print("Você falou:", stt)
   except sr.UnknownValueError:
     print("Sorry, I couldn't understand the audio.")
   except sr.RequestError as e:
