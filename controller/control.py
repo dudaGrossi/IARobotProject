@@ -3,6 +3,7 @@ import json
 import random
 
 def runRobot():
+  #coloca a imagem do robozinho e ele se apresenta 
   stt = sense.speech_to_text()
   print('STT = ', stt)
 
@@ -14,4 +15,10 @@ def runRobot():
         break
       elif word in dataset['despedidas']:
         act.act(random.choice(dataset['resDespedidas']))
+        break
+      elif word in dataset['ajuda']:
+        act.ligar()
+        break
+      elif word in dataset['animais']:
+        act.ligar()
         break

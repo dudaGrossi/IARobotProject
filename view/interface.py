@@ -14,7 +14,7 @@ largura_tela = janela.winfo_screenwidth()
 altura_tela = janela.winfo_screenheight()
 
 # Constrói o caminho relativo para a imagem usando o diretório do projeto
-caminho_imagem = os.path.join(diretorio_projeto, "robot.png")
+caminho_imagem = os.path.join(diretorio_projeto, "bunny.png")
 
 # Carrega a imagem do robô
 imagem_robo = Image.open(caminho_imagem)
