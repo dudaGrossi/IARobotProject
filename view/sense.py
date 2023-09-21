@@ -19,6 +19,6 @@ def speech_to_text():
     return stt
     # print("Você falou:", stt)
   except sr.UnknownValueError:
-    print("Sorry, I couldn't understand the audio.")
+    print("Desculpe, eu não entendi. Você pode repetir?.")
   except sr.RequestError as e:
-    print("Sorry, an error occurred. Could not request results; {0}".format(e))
+    print("Desculpe, algum erro ocorreu; {0}".format(e))

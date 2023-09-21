@@ -19,6 +19,14 @@ class FalaThread(threading.Thread):
     def run(self):
         falarComUsuario(self.fala_str)
 
+class SomThread(threading.Thread):
+    def __init__(self, som_str):
+        super().__init__()
+        self.som_str = som_str
+
+    def run(self):
+        emitirSom(self.som_str)
+
 #funções auxiliares para o uso das threads
 def falarComUsuario(str):
   act.falar(str)
@@ -26,21 +34,26 @@ def falarComUsuario(str):
 def mostrarInterface(str):
   act.mostrarInterface(str)
 
+def emitirSom(str):
+   act.emitirSom(str)
+
 def chamarThreadInterface(interface_str):
    thread_interface = InterfaceThread(interface_str)
    thread_interface.start()
    thread_interface.join()
 
 def runRobot():
-
   interface_str = "robot.png"
   fala_str = "Oi! Tudo bem? Sou seu mais novo amigo robô! Para começarmos, qual animal você deseja que eu seja?"
+  som_str = "gato"
 
   thread_interface = InterfaceThread(interface_str)
   thread_fala = FalaThread(fala_str)
+  thread_som = SomThread(som_str)
 
   thread_interface.start()
   thread_fala.start()
+  thread_som.start()
 
   thread_fala.join()
   
@@ -81,7 +94,12 @@ def runRobot():
           chamarThreadInterface(interface_str)          
         elif word == "gato":
           interface_str = "cat.png"
+          som_str = "gato"
           chamarThreadInterface(interface_str)
+          thread_som.join()
+          thread_som = SomThread(som_str)
+          thread_som.start()
+          thread_som.join()          
         elif word == "vaca":
           interface_str = "cow.png"
           chamarThreadInterface(interface_str)

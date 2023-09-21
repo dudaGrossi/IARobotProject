@@ -1,5 +1,5 @@
 import time
-from view import actInterface, actLigar
+from view import actInterface, actLigar, actEmitirSom
 
 from elevenlabs import generate, play, set_api_key
 
@@ -18,3 +18,7 @@ def ligar():
 
 def mostrarInterface(str):
     actInterface.mostraInterface(str)
+
+def emitirSom(animal):
+    actEmitirSom.emitirSom(animal)
+

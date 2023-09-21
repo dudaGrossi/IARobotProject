@@ -40,4 +40,4 @@ def emitirSom(animal):
     # Encerre o pygame
     pygame.quit()
 
-emitirSom("macaco")
+#emitirSom("gato")
