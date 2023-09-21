@@ -7,7 +7,7 @@ from elevenlabs import generate, play
 
 audio = generate(
   text="Voltei",
-  voice="Daniel",
+  voice="Rachel",
   model="eleven_multilingual_v2"
 )
 
