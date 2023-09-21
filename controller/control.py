@@ -26,6 +26,11 @@ def falarComUsuario(str):
 def mostrarInterface(str):
   act.mostrarInterface(str)
 
+def chamarThreadInterface(interface_str):
+   thread_interface = InterfaceThread(interface_str)
+   thread_interface.start()
+   thread_interface.join()
+
 def runRobot():
 
   interface_str = "robot.png"
@@ -64,52 +69,29 @@ def runRobot():
         act.ligar()
         break
       elif word in dataset['animais']:
-        if word == "urso":
-          thread_interface.join()
+        thread_interface.join()
+        if word == "urso":          
           interface_str = "bear.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)
         elif word == "touro":
-          thread_interface.join()
           interface_str = "bull.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)
         elif word == "coelho":
-          thread_interface.join()
           interface_str = "bunny.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)          
         elif word == "gato":
-          thread_interface.join()
           interface_str = "cat.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)
         elif word == "vaca":
-          thread_interface.join()
           interface_str = "cow.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)
         elif word == "cachorro":
-          thread_interface.join()
           interface_str = "dog.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)
         elif word == "macaco":
-          thread_interface.join()
           interface_str = "monkey.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)
         elif word =="panda":
-          thread_interface.join()
           interface_str = "panda.png"
-          thread_interface = InterfaceThread(interface_str)
-          thread_interface.start()
-          thread_interface.join()
+          chamarThreadInterface(interface_str)
         break
