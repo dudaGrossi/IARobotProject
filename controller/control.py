@@ -49,31 +49,67 @@ def runRobot():
     dataset = json.loads(file.read())
     for word in stt:
       if word in dataset['cumprimentos']:
-        falarComUsuario(random.choice(dataset['resCumprimentos']))
+        fala_str = random.choice(dataset['resCumprimentos'])
+        thread_fala = FalaThread(fala_str)
+        thread_fala.start()
+        thread_fala.join()
         break
       elif word in dataset['despedidas']:
-        falarComUsuario(random.choice(dataset['resDespedidas']))
+        fala_str = random.choice(dataset['resDespedidas'])
+        thread_fala = FalaThread(fala_str)
+        thread_fala.start()
+        thread_fala.join()
         break
       elif word in dataset['ajuda']:
         act.ligar()
         break
       elif word in dataset['animais']:
         if word == "urso":
-          mostrarInterface("bear.png")
+          thread_interface.join()
+          interface_str = "bear.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         elif word == "touro":
-          mostrarInterface("bull.png")
+          thread_interface.join()
+          interface_str = "bull.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         elif word == "coelho":
-          mostrarInterface("bunny.png")
+          thread_interface.join()
+          interface_str = "bunny.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         elif word == "gato":
-          mostrarInterface("cat.png")
+          thread_interface.join()
+          interface_str = "cat.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         elif word == "vaca":
-          mostrarInterface("cow.png")
+          thread_interface.join()
+          interface_str = "cow.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         elif word == "cachorro":
-          mostrarInterface("dog.png")
+          thread_interface.join()
+          interface_str = "dog.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         elif word == "macaco":
-          mostrarInterface("monkey.png")
+          thread_interface.join()
+          interface_str = "monkey.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         elif word =="panda":
-          mostrarInterface("panda.png")
+          thread_interface.join()
+          interface_str = "panda.png"
+          thread_interface = InterfaceThread(interface_str)
+          thread_interface.start()
+          thread_interface.join()
         break
-
-  thread_interface.join()
