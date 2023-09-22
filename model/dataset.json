@@ -4,5 +4,6 @@
     "despedidas":["tchau", "até"],
     "resDespedidas":["Falou!", "Até mais"],
     "ajuda":["ajuda", "ligar", "socorro"],
-    "animais":["urso", "touro", "coelho", "gato", "vaca", "cachorro", "macaco", "panda"]
+    "animais":["urso", "touro", "coelho", "gato", "vaca", "cachorro", "macaco", "panda"],
+    "nomes":["rex"]
 }
