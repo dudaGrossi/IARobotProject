@@ -8,14 +8,17 @@ def mostraInterface(str):
 
     janela = Tk()
     janela.title("Rosto do Robozinho")
-    janela.attributes('-fullscreen', True)
+    # Maximiza a janela
+    janela.state('zoomed')
+    # Defina um tamanho mínimo para a janela para evitar redimensionamento
+    janela.minsize(800, 600)
 
     # Obtém o tamanho da tela
     largura_tela = janela.winfo_screenwidth()
     altura_tela = janela.winfo_screenheight()
 
     # Constrói o caminho relativo para a imagem usando o diretório do projeto
-    caminho_imagem = os.path.join(diretorio_projeto, str)
+    caminho_imagem = os.path.join(diretorio_projeto, str[0])
 
     # Carrega a imagem do robô
     imagem_robo = Image.open(caminho_imagem)

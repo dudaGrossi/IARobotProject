@@ -10,7 +10,9 @@ def emitirSom(animal):
     arquivoAudio = ""  # Inicialize arquivoAudio como uma string vazia
 
     # Crie um objeto de som para o som do animal correspondente:
-    if animal == "urso":
+    if animal == "robo":
+        arquivoAudio = "robot.wav"
+    elif animal == "urso":
         arquivoAudio = "bear.wav"
     elif animal == "touro":
         arquivoAudio = "bull.wav"

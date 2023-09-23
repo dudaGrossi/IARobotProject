@@ -4,6 +4,8 @@ import random
 import threading
 import queue
 
+interface_str = ["robot.png"]
+
 class InterfaceThread(threading.Thread):
   def __init__(self, interface_str, action_queue):
     super().__init__()
@@ -56,9 +58,8 @@ def chamarThreadSom(som_str, action_queue):
   thread_som.start()
 
 def runRobot():
-  interface_str = "robot.png"
-  fala_str = "Oi! Tudo bem? Sou seu mais novo amigo robô! Para começarmos, qual animal você deseja que eu seja?"
-  som_str = "gato"
+  fala_str = "Oi! Tudo bem? Eu sou o Robô Pet, seu novo animal de estimação de I.A.! Eu estou ancioso para nos tornarmos amigos. Para isso, vamos começar a minha configuração. Primeiro, qual animal você deseja que eu seja?"
+  som_str = "robo"
 
   action_queue = queue.Queue()
 
@@ -81,46 +82,46 @@ def selecionaAcao(action_queue):
     for word in stt:
       if word in dataset['animais']:
         if word == "urso":
-          interface_str = "bear.png"
+          interface_str[0] = "bear.png"
           som_str = "urso"
           chamarThreadInterface(interface_str, action_queue)
         elif word == "touro":
-          interface_str = "bull.png"
+          interface_str[0] = "bull.png"
           som_str = "touro"
           chamarThreadInterface(interface_str, action_queue)
         elif word == "coelho":
-          interface_str = "bunny.png"
+          interface_str[0] = "bunny.png"
           som_str = "coelho"
           chamarThreadInterface(interface_str, action_queue)
         elif word == "gato":
-          interface_str = "cat.png"
+          interface_str[0] = "cat.png"
           som_str = "gato"
           chamarThreadInterface(interface_str, action_queue)
           chamarThreadSom(som_str, action_queue)
         elif word == "vaca":
-          interface_str = "cow.png"
+          interface_str[0] = "cow.png"
           som_str = "vaca"
           chamarThreadInterface(interface_str, action_queue)
         elif word == "cachorro":
-          interface_str = "dog.png"
+          interface_str[0] = "dog.png"
           som_str = "cachorro"
           chamarThreadInterface(interface_str, action_queue)
         elif word == "macaco":
-          interface_str = "monkey.png"
+          interface_str[0] = "monkey.png"
           som_str = "macaco"
           chamarThreadInterface(interface_str, action_queue)
         elif word == "panda":
-          interface_str = "panda.png"
+          interface_str[0] = "panda.png"
           som_str = "panda"
           chamarThreadInterface(interface_str, action_queue)
           break
       else:
         naoEhAnimal = True
         while naoEhAnimal:
-          fala_str = "Fale o nome de um animal, por favor."
+          fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outra, por favor."
           chamarThreadFala(fala_str, action_queue)
 
-  fala_str = "Perfeito! Agora escolha meu nome, por favor."
+  fala_str = "Perfeito! Agora escolha meu nome, por favor. Pense em um nome bem legal para mim!"
   #chamarThreadFala(fala_str, action_queue)
   falarComUsuario(fala_str)
 
