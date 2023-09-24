@@ -58,18 +58,20 @@ def chamarThreadSom(som_str, action_queue):
   thread_som.start()
 
 def conversar(str):
-  with open ('./model/dataset.json', 'r') as file:
+  with open('./model/dataset.json', 'r') as file:
     dataset = json.loads(file.read())
     if str in dataset['cumprimentos']:
       fala_str = random.choice(dataset['resCumprimentos'])
       falarComUsuario(fala_str)
-      breakpoint
     elif str in dataset['despedidas']:
+      fala_str = "Até logo!"
       falarComUsuario(fala_str)
-      breakpoint
     elif str in dataset['ajuda']:
       act.ligar()
-      breakpoint
+    else:
+      # Se a palavra não for reconhecida, não faz nada
+      pass
+
 
 def runRobot():
   fala_str = "Oi! Tudo bem? Eu sou o Robô Pet, seu novo animal de estimação de I.A.!Eu estou ansioso para nos tornarmos amigos. Para isso, vamos começar a minha configuração. Primeiro, qual animal você deseja que eu seja?"
@@ -137,10 +139,10 @@ def selecionaAcao(action_queue):
           chamarThreadSom(som_str, action_queue)
           break
       else:
-        naoEhAnimal = True
-        while naoEhAnimal:
-          fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outra, por favor."
+        while True:
+          fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outro, por favor."
           falarComUsuario(fala_str)
+          return
 
   fala_str = "Perfeito! Agora escolha meu nome, por favor. Pense em um nome bem legal para mim!"
   #chamarThreadFala(fala_str, action_queue)
@@ -161,13 +163,16 @@ def selecionaAcao(action_queue):
   fala_str = "Agora que estou configurado, podemos conversar!"
   falarComUsuario(fala_str)
   #chamarThreadFala(fala_str, action_queue)
-  comando = sense.speech_to_text()
-  print('Comando = ', comando)
+  while True:
+    stt = sense.speech_to_text()
+    print('STT = ', stt)
 
-  with open ('./model/dataset.json', 'r') as file:
-    dataset = json.loads(file.read())
-    for word in comando:
-      while word not in dataset['desligar']:
+    with open('./model/dataset.json', 'r') as file:
+      dataset = json.loads(file.read())
+      for word in stt:
+        if word in dataset['desligar']:
+          fala_str = "Desligando. Até logo!"
+          falarComUsuario(fala_str)
+          return
         conversar(word)
 
-      break
