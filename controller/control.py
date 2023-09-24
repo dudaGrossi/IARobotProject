@@ -58,17 +58,17 @@ def chamarThreadSom(som_str, action_queue):
   thread_som.start()
 
 def runRobot():
-  fala_str = "Oi! Tudo bem? Eu sou o Robô Pet, seu novo animal de estimação de I.A.! Eu estou ancioso para nos tornarmos amigos. Para isso, vamos começar a minha configuração. Primeiro, qual animal você deseja que eu seja?"
+  fala_str = "Oi! Tudo bem? Eu sou o Robô Pet, seu novo animal de estimação de I.A.!Eu estou ansioso para nos tornarmos amigos. Para isso, vamos começar a minha configuração. Primeiro, qual animal você deseja que eu seja?"
   som_str = "robo"
 
   action_queue = queue.Queue()
-
-  chamarThreadInterface(interface_str, action_queue)
+  
   chamarThreadFala(fala_str, action_queue)
+  chamarThreadInterface(interface_str, action_queue)
   chamarThreadSom(som_str, action_queue)
 
-  # Aguarde todas as ações serem concluídas antes de continuar
-  for _ in range(3):
+  # Aguarda a primeira ação ser concluída antes de continuar
+  for _ in range(2):
     action_queue.get()
 
   selecionaAcao(action_queue)
@@ -127,7 +127,7 @@ def selecionaAcao(action_queue):
 
   nomes = sense.speech_to_text()
   print('Nome = ', nomes)
-  
+
   with open ('./model/dataset.json', 'r') as file:
     dataset = json.loads(file.read())
     for nome in nomes:
