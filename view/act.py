@@ -3,7 +3,7 @@ from view import actInterface, actLigar, actEmitirSom
 
 from elevenlabs import generate, play, set_api_key
 
-set_api_key("3a34edeb55ac8a6cba868ee8782d73ea")
+set_api_key("030fbc23763c00a37e26d23eeb44eeac")
 
 def falar(str):
     audio = generate(
