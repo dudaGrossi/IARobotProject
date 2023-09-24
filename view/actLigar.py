@@ -4,7 +4,7 @@ from twilio.rest import Client
 
 def realizaLigacao():
     account_sid = "AC9b12379e3c03247af873c6e91869ac2c"
-    auth_token = "78857c0adf8375bc04ad1639b076547b" #modificado, pois caso contrário o twilio bloqueia por estar em repositório público no github
+    auth_token = "token" #modificado, pois caso contrário o twilio bloqueia por estar em repositório público no github
     meu_numero = "+5537988247540"
     numero_twilio = "+12565888741"
 
