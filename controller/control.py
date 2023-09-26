@@ -2,6 +2,7 @@ from view import sense, act
 import json
 import random
 import threading
+import time
 
 class InterfaceThread(threading.Thread):
     imagem = "robot.png"
@@ -68,6 +69,7 @@ def conversar(str):
       falarComUsuario(fala_str)
     elif str in dataset['ajuda']:
       act.ligar()
+      time.sleep(30) #tempo necessário para completar a ligação antes de pedir a próxima palavra 
     else:
       # Se a palavra não for reconhecida, não faz nada
       pass
@@ -77,8 +79,8 @@ def runRobot():
   fala_str = "Oi!"
   som_str = "robo"
   chamarThreadInterface(atualizarImagem)
-  chamarThreadFala(fala_str)
   chamarThreadSom(som_str)
+  chamarThreadFala(fala_str)
   
   stt = sense.speech_to_text()
   print('STT = ', stt)
