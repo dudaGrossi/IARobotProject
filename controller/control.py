@@ -2,40 +2,31 @@ from view import sense, act
 import json
 import random
 import threading
-import queue
-
-interface_str = ["robot.png"]
 
 class InterfaceThread(threading.Thread):
-  def __init__(self, interface_str, action_queue):
-    super().__init__()
-    self.interface_str = interface_str
-    self.action_queue = action_queue
-
-  def run(self):
-    mostrarInterface(self.interface_str)
-    self.action_queue.put("interface_done")
+    def __init__(self, interface_str):
+        super().__init__()
+        self.interface_str = interface_str
+    def run(self):
+        mostrarInterface(self.interface_str)
 
 class FalaThread(threading.Thread):
-  def __init__(self, fala_str, action_queue):
-    super().__init__()
-    self.fala_str = fala_str
-    self.action_queue = action_queue
-
-  def run(self):
-    falarComUsuario(self.fala_str)
-    self.action_queue.put("fala_done")
+    def __init__(self, fala_str):
+        super().__init__()
+        self.fala_str = fala_str
+    def run(self):
+        falarComUsuario(self.fala_str)
 
 class SomThread(threading.Thread):
-  def __init__(self, som_str, action_queue):
-    super().__init__()
-    self.som_str = som_str
-    self.action_queue = action_queue
+  def __init__(self, som_str):
+      super().__init__()
+      self.som_str = som_str
 
   def run(self):
-    emitirSom(self.som_str)
-    self.action_queue.put("som_done")
+      emitirSom(self.som_str)
 
+
+#funções auxiliares para o uso das threads
 def falarComUsuario(str):
   act.falar(str)
 
@@ -44,18 +35,22 @@ def mostrarInterface(str):
 
 def emitirSom(str):
   act.emitirSom(str)
+#fim das funções auxiliares
 
-def chamarThreadInterface(interface_str, action_queue):
-  thread_interface = InterfaceThread(interface_str, action_queue)
-  thread_interface.start()
+def chamarThreadInterface(interface_str):
+   thread_interface = InterfaceThread(interface_str)
+   thread_interface.start()
+   thread_interface.join()
 
-def chamarThreadFala(fala_str, action_queue):
-  thread_fala = FalaThread(fala_str, action_queue)
+def chamarThreadFala(fala_str):
+  thread_fala = FalaThread(fala_str)
   thread_fala.start()
+  thread_fala.join()
 
-def chamarThreadSom(som_str, action_queue):
-  thread_som = SomThread(som_str, action_queue)
+def chamarThreadSom(som_str):
+  thread_som = SomThread(som_str)
   thread_som.start()
+  thread_som.join()
 
 def conversar(str):
   with open('./model/dataset.json', 'r') as file:
@@ -63,8 +58,8 @@ def conversar(str):
     if str in dataset['cumprimentos']:
       fala_str = random.choice(dataset['resCumprimentos'])
       falarComUsuario(fala_str)
-    elif str in dataset['despedidas']:
-      fala_str = "Até logo!"
+    elif str in dataset['perguntas']:
+      fala_str = random.choice(dataset['resPerguntas'])
       falarComUsuario(fala_str)
     elif str in dataset['ajuda']:
       act.ligar()
@@ -74,78 +69,69 @@ def conversar(str):
 
 
 def runRobot():
-  fala_str = "Oi! Tudo bem? Eu sou o Robô Pet, seu novo animal de estimação de I.A.!Eu estou ansioso para nos tornarmos amigos. Para isso, vamos começar a minha configuração. Primeiro, qual animal você deseja que eu seja?"
+  interface_str = "robot.png"
+  fala_str = "Oi!"
   som_str = "robo"
-
-  action_queue = queue.Queue()
+  chamarThreadInterface(interface_str)
+  chamarThreadFala(fala_str)
+  chamarThreadSom(som_str)
   
-  chamarThreadFala(fala_str, action_queue)
-  chamarThreadInterface(interface_str, action_queue)
-  chamarThreadSom(som_str, action_queue)
-
-  # Aguarda a primeira ação ser concluída antes de continuar
-  for _ in range(3):
-    action_queue.get()
-
-  selecionaAcao(action_queue)
-
-def selecionaAcao(action_queue):
   stt = sense.speech_to_text()
   print('STT = ', stt)
-
   with open ('./model/dataset.json', 'r') as file:
     dataset = json.loads(file.read())
     for word in stt:
       if word in dataset['animais']:
-        if word == "urso":
-          interface_str[0] = "bear.png"
-          som_str = "urso"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
-        elif word == "touro":
-          interface_str[0] = "bull.png"
-          som_str = "touro"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
-        elif word == "coelho":
-          interface_str[0] = "bunny.png"
-          som_str = "coelho"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
-        elif word == "gato":
-          interface_str[0] = "cat.png"
-          som_str = "gato"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
-        elif word == "vaca":
-          interface_str[0] = "cow.png"
-          som_str = "vaca"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
-        elif word == "cachorro":
-          interface_str[0] = "dog.png"
-          som_str = "cachorro"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
-        elif word == "macaco":
-          interface_str[0] = "monkey.png"
-          som_str = "macaco"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
-        elif word == "panda":
-          interface_str[0] = "panda.png"
-          som_str = "panda"
-          chamarThreadInterface(interface_str, action_queue)
-          chamarThreadSom(som_str, action_queue)
+          if word == "urso":          
+            interface_str = "bear.png"
+            chamarThreadInterface(interface_str)
+            som_str = "urso"
+            chamarThreadSom(som_str)
+          elif word == "touro":
+            interface_str = "bull.png"
+            chamarThreadInterface(interface_str)
+            som_str = "touro"
+            chamarThreadSom(som_str)
+          elif word == "coelho":
+            interface_str = "bunny.png"
+            chamarThreadInterface(interface_str) 
+            som_str = "coelho"
+            chamarThreadSom(som_str)         
+          elif word == "gato":
+            interface_str = "cat.png"
+            chamarThreadInterface(interface_str)
+            som_str = "gato"
+            chamarThreadSom(som_str)
+          elif word == "vaca":
+            interface_str = "cow.png"
+            chamarThreadInterface(interface_str)
+            som_str = "vaca"
+            chamarThreadSom(som_str)
+          elif word == "cachorro":
+            interface_str = "dog.png"
+            chamarThreadInterface(interface_str)
+            som_str = "cachorro"
+            chamarThreadSom(som_str)
+          elif word == "macaco":
+            interface_str = "monkey.png"
+            chamarThreadInterface(interface_str)
+            som_str = "macaco"
+            chamarThreadSom(som_str)
+          elif word =="panda":
+            interface_str = "panda.png"
+            chamarThreadInterface(interface_str)
+            som_str = "panda"
+            chamarThreadSom(som_str)
           break
       else:
         while True:
-          fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outro, por favor."
+          fala_str = "Desculpe"
+          #fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outro, por favor."
           falarComUsuario(fala_str)
           return
 
-  fala_str = "Perfeito! Agora escolha meu nome, por favor. Pense em um nome bem legal para mim!"
-  #chamarThreadFala(fala_str, action_queue)
+  fala_str = "Nome"
+  #fala_str = "Perfeito! Agora escolha meu nome, por favor. Pense em um nome bem legal para mim!"
   falarComUsuario(fala_str)
 
   nomes = sense.speech_to_text()
@@ -155,24 +141,37 @@ def selecionaAcao(action_queue):
     dataset = json.loads(file.read())
     for nome in nomes:
       if nome in dataset['nomes']:
-        fala_str = "Que nome lindo!"
+        fala_str = "Nome ok"
+        #fala_str = "Uau! Que nome lindo! Adorei! Agora aguarde só um instante enquanto eu termino a minha configuração."
         falarComUsuario(fala_str)
-        #chamarThreadFala(fala_str, action_queue)
         break
+      else: 
+        fala_str = "Nome não"
+        #fala_str = "Obrigado! Agora aguarde só um instante enquanto eu termino a minha configuração."
+        falarComUsuario(fala_str)
 
-  fala_str = "Agora que estou configurado, podemos conversar!"
+  fala_str = "Configurado"
+  #fala_str = "Agora que estou configurado, podemos conversar!"
   falarComUsuario(fala_str)
-  #chamarThreadFala(fala_str, action_queue)
+
   while True:
-    stt = sense.speech_to_text()
-    print('STT = ', stt)
+    fala = sense.speech_to_text()
+    print('STT = ', fala)
 
     with open('./model/dataset.json', 'r') as file:
       dataset = json.loads(file.read())
-      for word in stt:
+      continuar_conversa = False  
+      for word in fala:
         if word in dataset['desligar']:
-          fala_str = "Desligando. Até logo!"
+          fala_str = random.choice(dataset['resDespedidas'])
+          falarComUsuario(fala_str)
+          fala_str = "Desligando..."
           falarComUsuario(fala_str)
           return
-        conversar(word)
-
+        else:
+          continuar_conversa = True  # Se uma palavra não estiver em 'desligar', definimos a variável como True - conversa deve continuar
+          #conversar(word)
+    
+    # Depois do loop, verificamos a variável e chamamos conversar(word) se for True
+    if continuar_conversa:
+      conversar(word)

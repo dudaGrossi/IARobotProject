@@ -18,7 +18,7 @@ def mostraInterface(str):
     altura_tela = janela.winfo_screenheight()
 
     # Constrói o caminho relativo para a imagem usando o diretório do projeto
-    caminho_imagem = os.path.join(diretorio_projeto, str[0])
+    caminho_imagem = os.path.join(diretorio_projeto, str)
 
     # Carrega a imagem do robô
     imagem_robo = Image.open(caminho_imagem)
