@@ -4,12 +4,14 @@ import random
 import threading
 
 class InterfaceThread(threading.Thread):
-    def __init__(self, interface_str):
-        super().__init__()
-        self.interface_str = interface_str
-    def run(self):
-        mostrarInterface(self.interface_str)
+    imagem = "robot.png"
 
+    def __init__(self, update_func):
+        super().__init__()
+        self.update_func = update_func
+    def run(self):
+        mostrarInterface(self.update_func)
+    
 class FalaThread(threading.Thread):
     def __init__(self, fala_str):
         super().__init__()
@@ -25,6 +27,9 @@ class SomThread(threading.Thread):
   def run(self):
       emitirSom(self.som_str)
 
+#função que atualiza a imagem na interface
+def atualizarImagem():
+  return InterfaceThread.imagem
 
 #funções auxiliares para o uso das threads
 def falarComUsuario(str):
@@ -37,10 +42,10 @@ def emitirSom(str):
   act.emitirSom(str)
 #fim das funções auxiliares
 
-def chamarThreadInterface(interface_str):
-   thread_interface = InterfaceThread(interface_str)
+def chamarThreadInterface(funcAtualizarImagem):
+   thread_interface = InterfaceThread(funcAtualizarImagem)
    thread_interface.start()
-   thread_interface.join()
+   #thread_interface.join()
 
 def chamarThreadFala(fala_str):
   thread_fala = FalaThread(fala_str)
@@ -69,10 +74,9 @@ def conversar(str):
 
 
 def runRobot():
-  interface_str = "robot.png"
   fala_str = "Oi!"
   som_str = "robo"
-  chamarThreadInterface(interface_str)
+  chamarThreadInterface(atualizarImagem)
   chamarThreadFala(fala_str)
   chamarThreadSom(som_str)
   
@@ -83,43 +87,35 @@ def runRobot():
     for word in stt:
       if word in dataset['animais']:
           if word == "urso":          
-            interface_str = "bear.png"
-            chamarThreadInterface(interface_str)
+            InterfaceThread.imagem = "bear.png"
             som_str = "urso"
             chamarThreadSom(som_str)
           elif word == "touro":
-            interface_str = "bull.png"
-            chamarThreadInterface(interface_str)
+            InterfaceThread.imagem = "bull.png"
             som_str = "touro"
             chamarThreadSom(som_str)
           elif word == "coelho":
-            interface_str = "bunny.png"
-            chamarThreadInterface(interface_str) 
+            InterfaceThread.imagem = "bunny.png"
             som_str = "coelho"
             chamarThreadSom(som_str)         
           elif word == "gato":
-            interface_str = "cat.png"
-            chamarThreadInterface(interface_str)
+            InterfaceThread.imagem = "cat.png"
             som_str = "gato"
             chamarThreadSom(som_str)
           elif word == "vaca":
-            interface_str = "cow.png"
-            chamarThreadInterface(interface_str)
+            InterfaceThread.imagem = "cow.png"
             som_str = "vaca"
             chamarThreadSom(som_str)
           elif word == "cachorro":
-            interface_str = "dog.png"
-            chamarThreadInterface(interface_str)
+            InterfaceThread.imagem = "dog.png"
             som_str = "cachorro"
             chamarThreadSom(som_str)
           elif word == "macaco":
-            interface_str = "monkey.png"
-            chamarThreadInterface(interface_str)
+            InterfaceThread.imagem = "monkey.png"
             som_str = "macaco"
             chamarThreadSom(som_str)
           elif word =="panda":
-            interface_str = "panda.png"
-            chamarThreadInterface(interface_str)
+            InterfaceThread.imagem = "panda.png"
             som_str = "panda"
             chamarThreadSom(som_str)
           break
