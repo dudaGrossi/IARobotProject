@@ -2,10 +2,10 @@
     "cumprimentos":["oi", "olá", "ei", "e aí"],
     "perguntas": ["tudo", "como"],
     "resCumprimentos":["E a i?", "Opa!"],
-    "resPerguntas":["Tudo bem! E com você?", "Vou bem! Mas quero saber de você, como está?"],
+    "resPerguntas":["Tudo bem! E com você?", "Vou bem! Mas quero saber de você, como você está?"],
     "ajuda":["ajuda", "ligar", "socorro"],
     "animais":["urso", "touro", "coelho", "gato", "vaca", "cachorro", "macaco", "panda"],
     "nomes":["rex", "tobi", "bob", "nina", "florzinha"],
     "desligar":["desligar", "tchau", "adeus", "até"],
-    "resDespedidas":["Falou!", "Até mais"]
+    "resDespedidas":["Falou!", "Atéé mais"]
 }

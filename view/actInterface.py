@@ -3,21 +3,21 @@ from tkinter import *
 from PIL import Image, ImageTk
 
 def mostraInterface(funcAtualizarInterface):
-    # Obtém o diretório do projeto atual
+    #obtém o diretório do projeto atual
     diretorio_projeto = os.path.dirname(os.path.abspath(__file__)) + "/imagens/"
 
     janela = Tk()
     janela.title("Rosto do Robozinho")
-    # Maximiza a janela
+    #maximiza a janela
     janela.state('zoomed')
-    # Defina um tamanho mínimo para a janela para evitar redimensionamento
+    #defina um tamanho mínimo para a janela para evitar redimensionamento
     janela.minsize(800, 600)
 
-    # Obtém o tamanho da tela
+    #obtém o tamanho da tela
     largura_tela = janela.winfo_screenwidth()
     altura_tela = janela.winfo_screenheight()
 
-    # Função para atualizar a imagem com base na função de atualização fornecida
+    #função para atualizar a imagem com base na função de atualização fornecida
     def atualizar_imagem():
         caminho_imagem = os.path.join(diretorio_projeto, funcAtualizarInterface())
         imagem_robo = Image.open(caminho_imagem)
@@ -27,23 +27,23 @@ def mostraInterface(funcAtualizarInterface):
         label_imagem.image = imagem_robo  # Atualize a referência para a nova imagem
         janela.after(1000, atualizar_imagem)  # Chama a função a cada 1000 milissegundos (1 segundo)
 
-    # Constrói o caminho relativo para a imagem usando a função fornecida
+    #constrói o caminho relativo para a imagem usando a função fornecida
     caminho_imagem = os.path.join(diretorio_projeto, funcAtualizarInterface())
 
-    # Carrega a imagem do robô
+    #carrega a imagem do robô
     imagem_robo = Image.open(caminho_imagem)
 
-    # Redimensiona a imagem para o tamanho da tela
+    #redimensiona a imagem para o tamanho da tela
     imagem_robo = imagem_robo.resize((largura_tela, altura_tela))
 
-    # Converte a imagem para um formato compatível com o tkinter
+    #converte a imagem para um formato compatível com o tkinter
     imagem_robo = ImageTk.PhotoImage(imagem_robo)
 
-    # Exibir a imagem em um Label
+    #exibir a imagem em um Label
     label_imagem = Label(janela, image=imagem_robo)
     label_imagem.grid(column=0, row=0)
 
-    # Inicializa a atualização automática da imagem
+    #inicializa a atualização automática da imagem
     atualizar_imagem()
 
     janela.mainloop()
