@@ -85,14 +85,17 @@ def selecionaAcao(action_queue):
           interface_str[0] = "bear.png"
           som_str = "urso"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "touro":
           interface_str[0] = "bull.png"
           som_str = "touro"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "coelho":
           interface_str[0] = "bunny.png"
           som_str = "coelho"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "gato":
           interface_str[0] = "cat.png"
           som_str = "gato"
@@ -102,18 +105,22 @@ def selecionaAcao(action_queue):
           interface_str[0] = "cow.png"
           som_str = "vaca"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "cachorro":
           interface_str[0] = "dog.png"
           som_str = "cachorro"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "macaco":
           interface_str[0] = "monkey.png"
           som_str = "macaco"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "panda":
           interface_str[0] = "panda.png"
           som_str = "panda"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
           break
       else:
         naoEhAnimal = True
@@ -149,6 +156,7 @@ def selecionaAcao(action_queue):
       chamarThreadFala(fala_str, action_queue)
       break
     elif word in dataset['despedidas']:
+      fala_str = random.choice(dataset['resCumprimentos'])
       chamarThreadFala(fala_str, action_queue)
       break
     elif word in dataset['ajuda']:
