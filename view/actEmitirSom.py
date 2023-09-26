@@ -2,14 +2,14 @@ import os
 import pygame
 
 def emitirSom(animal):
-    # Inicialize o pygame
+    #inicializa o pygame
     pygame.init()
 
     diretorio_sons = os.path.dirname(os.path.abspath(__file__)) + "/sons/"
 
-    arquivoAudio = ""  # Inicialize arquivoAudio como uma string vazia
+    arquivoAudio = ""  #inicializa arquivoAudio como uma string vazia
 
-    # Crie um objeto de som para o som do animal correspondente:
+    #cria um objeto de som para o som do animal correspondente:
     if animal == "robo":
         arquivoAudio = "robot.wav"
     elif animal == "urso":
@@ -29,17 +29,17 @@ def emitirSom(animal):
     elif animal == "panda":
         arquivoAudio = "panda.wav"
 
-    caminho_completo = os.path.join(diretorio_sons, arquivoAudio)  # Combine o diretório com o nome do arquivo
+    caminho_completo = os.path.join(diretorio_sons, arquivoAudio)  #combina o diretório com o nome do arquivo
 
     som = pygame.mixer.Sound(caminho_completo)
 
-    # Reproduza o som do animal
+    #reproduz o som do animal
     som.play()
 
-    # Aguarde a reprodução do som terminar
-    pygame.time.delay(int(som.get_length() * 1000))  # Espera até que o som termine (em milissegundos)
+    #aguarda a reprodução do som terminar
+    pygame.time.delay(int(som.get_length() * 1000))  #espera até que o som termine (em milissegundos)
 
-    # Encerre o pygame
+    #encerra o pygame
     pygame.quit()
 
-#emitirSom("gato")
+

@@ -3,6 +3,8 @@ import json
 import random
 import threading
 
+#definindo uma imagem padrão para a interface
+#definindo uma thread para lidar com a interface
 class InterfaceThread(threading.Thread):
     imagem = "robot.png"
 
@@ -11,7 +13,8 @@ class InterfaceThread(threading.Thread):
         self.update_func = update_func
     def run(self):
         mostrarInterface(self.update_func)
-    
+
+#definindo uma thread para lidar com a fala   
 class FalaThread(threading.Thread):
     def __init__(self, fala_str):
         super().__init__()
@@ -19,6 +22,7 @@ class FalaThread(threading.Thread):
     def run(self):
         falarComUsuario(self.fala_str)
 
+#definindo uma thread para lidar com o som
 class SomThread(threading.Thread):
   def __init__(self, som_str):
       super().__init__()
@@ -42,21 +46,25 @@ def emitirSom(str):
   act.emitirSom(str)
 #fim das funções auxiliares
 
+#função para iniciar a thread da interface
 def chamarThreadInterface(funcAtualizarImagem):
    thread_interface = InterfaceThread(funcAtualizarImagem)
    thread_interface.start()
    #thread_interface.join()
 
+#função para iniciar a thread de fala
 def chamarThreadFala(fala_str):
   thread_fala = FalaThread(fala_str)
   thread_fala.start()
   thread_fala.join()
 
+#função para iniciar a thread de som
 def chamarThreadSom(som_str):
   thread_som = SomThread(som_str)
   thread_som.start()
   thread_som.join()
 
+#função para processar a entrada de voz e responder de acordo
 def conversar(str):
   with open('./model/dataset.json', 'r') as file:
     dataset = json.loads(file.read())
@@ -69,16 +77,16 @@ def conversar(str):
     elif str in dataset['ajuda']:
       act.ligar()
     else:
-      # Se a palavra não for reconhecida, não faz nada
+      #se a palavra não for reconhecida, não faz nada
       pass
 
-
+#função principal para iniciar o robô
 def runRobot():
-  fala_str = "Oi!"
+  fala_str = "Oi! Tudo bem? Eu sou o Robô Pet, seu novo animal de estimação de I.A.!Eu estou ansioso para nos tornarmos amigos. Para isso, vamos começar a minha configuração. Primeiro, qual animal você deseja que eu seja"
   som_str = "robo"
   chamarThreadInterface(atualizarImagem)
-  chamarThreadFala(fala_str)
   chamarThreadSom(som_str)
+  chamarThreadFala(fala_str)
   
   stt = sense.speech_to_text()
   print('STT = ', stt)
@@ -121,13 +129,11 @@ def runRobot():
           break
       else:
         while True:
-          fala_str = "Desculpe"
-          #fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outro, por favor."
+          fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outro, por favor."
           falarComUsuario(fala_str)
           return
 
-  fala_str = "Nome"
-  #fala_str = "Perfeito! Agora escolha meu nome, por favor. Pense em um nome bem legal para mim!"
+  fala_str = "Perfeito! Agora escolha meu nome, por favor. Pense em um nome bem legal para mim!"
   falarComUsuario(fala_str)
 
   nomes = sense.speech_to_text()
@@ -137,17 +143,14 @@ def runRobot():
     dataset = json.loads(file.read())
     for nome in nomes:
       if nome in dataset['nomes']:
-        fala_str = "Nome ok"
-        #fala_str = "Uau! Que nome lindo! Adorei! Agora aguarde só um instante enquanto eu termino a minha configuração."
+        fala_str = "Uau! Que nome lindo! Adorei! Agora aguarde só um instante enquanto eu termino a minha configuração."
         falarComUsuario(fala_str)
         break
       else: 
-        fala_str = "Nome não"
-        #fala_str = "Obrigado! Agora aguarde só um instante enquanto eu termino a minha configuração."
+        fala_str = "Obrigado! Agora aguarde só um instante enquanto eu termino a minha configuração."
         falarComUsuario(fala_str)
 
-  fala_str = "Configurado"
-  #fala_str = "Agora que estou configurado, podemos conversar!"
+  fala_str = "Agora que estou configurado, podemos conversar!"
   falarComUsuario(fala_str)
 
   while True:
@@ -165,9 +168,8 @@ def runRobot():
           falarComUsuario(fala_str)
           return
         else:
-          continuar_conversa = True  # Se uma palavra não estiver em 'desligar', definimos a variável como True - conversa deve continuar
-          #conversar(word)
+          continuar_conversa = True  #se uma palavra não estiver em 'desligar', definimos a variável como True - conversa deve continuar
     
-    # Depois do loop, verificamos a variável e chamamos conversar(word) se for True
+    #depois do loop, verificamos a variável e chamamos conversar(word) se for True
     if continuar_conversa:
       conversar(word)
