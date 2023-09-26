@@ -57,6 +57,22 @@ def chamarThreadSom(som_str, action_queue):
   thread_som = SomThread(som_str, action_queue)
   thread_som.start()
 
+def conversar(str):
+  with open('./model/dataset.json', 'r') as file:
+    dataset = json.loads(file.read())
+    if str in dataset['cumprimentos']:
+      fala_str = random.choice(dataset['resCumprimentos'])
+      falarComUsuario(fala_str)
+    elif str in dataset['despedidas']:
+      fala_str = "Até logo!"
+      falarComUsuario(fala_str)
+    elif str in dataset['ajuda']:
+      act.ligar()
+    else:
+      # Se a palavra não for reconhecida, não faz nada
+      pass
+
+
 def runRobot():
   fala_str = "Oi! Tudo bem? Eu sou o Robô Pet, seu novo animal de estimação de I.A.!Eu estou ansioso para nos tornarmos amigos. Para isso, vamos começar a minha configuração. Primeiro, qual animal você deseja que eu seja?"
   som_str = "robo"
@@ -68,7 +84,7 @@ def runRobot():
   chamarThreadSom(som_str, action_queue)
 
   # Aguarda a primeira ação ser concluída antes de continuar
-  for _ in range(2):
+  for _ in range(3):
     action_queue.get()
 
   selecionaAcao(action_queue)
@@ -86,10 +102,12 @@ def selecionaAcao(action_queue):
           som_str = "urso"
           chamarThreadInterface(interface_str, action_queue)
           chamarThreadSom(som_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "touro":
           interface_str[0] = "bull.png"
           som_str = "touro"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
           chamarThreadSom(som_str, action_queue)
         elif word == "coelho":
           interface_str[0] = "bunny.png"
@@ -106,27 +124,31 @@ def selecionaAcao(action_queue):
           som_str = "vaca"
           chamarThreadInterface(interface_str, action_queue)
           chamarThreadSom(som_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "cachorro":
           interface_str[0] = "dog.png"
           som_str = "cachorro"
           chamarThreadInterface(interface_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
           chamarThreadSom(som_str, action_queue)
         elif word == "macaco":
           interface_str[0] = "monkey.png"
           som_str = "macaco"
           chamarThreadInterface(interface_str, action_queue)
           chamarThreadSom(som_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
         elif word == "panda":
           interface_str[0] = "panda.png"
           som_str = "panda"
           chamarThreadInterface(interface_str, action_queue)
           chamarThreadSom(som_str, action_queue)
+          chamarThreadSom(som_str, action_queue)
           break
       else:
-        naoEhAnimal = True
-        while naoEhAnimal:
-          fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outra, por favor."
-          chamarThreadFala(fala_str, action_queue)
+        while True:
+          fala_str = "Me desculpe. Por enquanto, eu ainda não consigo ser esse animal. Tente outro, por favor."
+          falarComUsuario(fala_str)
+          return
 
   fala_str = "Perfeito! Agora escolha meu nome, por favor. Pense em um nome bem legal para mim!"
   #chamarThreadFala(fala_str, action_queue)
@@ -139,7 +161,7 @@ def selecionaAcao(action_queue):
     dataset = json.loads(file.read())
     for nome in nomes:
       if nome in dataset['nomes']:
-        fala_str = "Que nome lindo! Agora eu me chamo", nome
+        fala_str = "Que nome lindo!"
         falarComUsuario(fala_str)
         #chamarThreadFala(fala_str, action_queue)
         break
@@ -147,18 +169,16 @@ def selecionaAcao(action_queue):
   fala_str = "Agora que estou configurado, podemos conversar!"
   falarComUsuario(fala_str)
   #chamarThreadFala(fala_str, action_queue)
-  conversa = sense.speech_to_text()
-  print('Conversa = ', conversa)
+  while True:
+    stt = sense.speech_to_text()
+    print('STT = ', stt)
 
-  for word in conversa:
-    if word in dataset['cumprimentos']:
-      fala_str = random.choice(dataset['resCumprimentos'])
-      chamarThreadFala(fala_str, action_queue)
-      break
-    elif word in dataset['despedidas']:
-      fala_str = random.choice(dataset['resCumprimentos'])
-      chamarThreadFala(fala_str, action_queue)
-      break
-    elif word in dataset['ajuda']:
-      act.ligar()
-      break
+    with open('./model/dataset.json', 'r') as file:
+      dataset = json.loads(file.read())
+      for word in stt:
+        if word in dataset['desligar']:
+          fala_str = "Desligando. Até logo!"
+          falarComUsuario(fala_str)
+          return
+        conversar(word)
+
